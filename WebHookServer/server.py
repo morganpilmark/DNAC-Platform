@@ -2,7 +2,7 @@
 from __future__ import print_function
 from flask import Flask
 from flask import request
-from slack import post_slack
+from slack import post_slack, post_slack_new
 app = Flask(__name__)
 
 
@@ -32,7 +32,7 @@ def new_format_event(dnac,event):
     if 'ciscoDnaEventLink' in event:
         # check for https in the URL already
         if "https" in event['ciscoDnaEventLink']:
-            message += "\nEventURL: {}".format(event['ciscoDnaEventLink'])
+            message += "\nEventURL: <{}|Issue Link>".format(event['ciscoDnaEventLink'])
         else:
             message += "\nEventURL: https://{}/{}".format(dnac,event['ciscoDnaEventLink'])
     return header, message
@@ -54,13 +54,8 @@ def handle(dnac, event):
 
 
     # Send to Slack
-    post_slack(header,message)
+    post_slack_new(header,message,event)
 
-    # send to webex
-    #post_message("*******\n" + header + message)
-
-    # send an email
-    #send_mail(header,message)
 
 @app.route('/', defaults={'path': ''}, methods=['GET','POST'])
 @app.route('/<path:path>', methods=["GET","PUT","POST","DELETE"])
