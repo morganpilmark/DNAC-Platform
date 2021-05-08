@@ -32,7 +32,7 @@ def new_format_event(dnac,event):
     if 'ciscoDnaEventLink' in event:
         # check for https in the URL already
         if "https" in event['ciscoDnaEventLink']:
-            message += "\nEventURL: <{}|Issue Link>".format(event['ciscoDnaEventLink'])
+            message += "\nEventURL: {}".format(event['ciscoDnaEventLink'])
         else:
             message += "\nEventURL: https://{}/{}".format(dnac,event['ciscoDnaEventLink'])
     return header, message

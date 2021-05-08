@@ -32,10 +32,13 @@ def post_slack_new(header, message, raw_event):
     else:
         attachments['color'] = "warning"
     attachments['fallback'] = header + message
-    attachments['fields'] = {}
-    fields = [{'title': raw_event['details']['Assurance Issue Details'], 'value': header + message, 'short': False}]
-    attachments['fields'] = fields
-    attachments['mrkdwn_in'] = ['value', 'fallback']
+    #attachments['fields'] = {}
+    #fields = [{'title': raw_event['details']['Assurance Issue Details'], 'value': header + message, 'short': False}]
+    #attachments['fields'] = fields
+    attachments['title'] = raw_event['details']['Assurance Issue Details']
+    attachments['title_link'] = raw_event['ciscoDnaEventLink']
+    attachments['text'] = header + message
+    attachments['type'] = "mrkdwn"
     data = {'attachments': [attachments] }
     print("data:\n")
     print(json.dumps(data))
