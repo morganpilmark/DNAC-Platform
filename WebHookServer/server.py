@@ -4,9 +4,6 @@ from flask import Flask
 from flask import request
 app = Flask(__name__)
 
-from webex_teams import post_message
-#from gmail import send_mail
-
 
 def old_format_event(event):
 
@@ -39,11 +36,26 @@ def new_format_event(dnac,event):
             message += "\nEventURL: https://{}/{}".format(dnac,event['ciscoDnaEventLink'])
     return header, message
 
+def post_slack(header,message):
+    # Set the webhook_url to the one provided by Slack when you create the webhook at https://my.slack.com/services/new/incoming-webhook
+    slack_data = {'text': "Sup! We're hacking shit together :spaghetti:"}
+
+    response = requests.post(
+        webhook_url, data=json.dumps(slack_data),
+        headers={'Content-Type': 'application/json'}
+    )
+    if response.status_code != 200:
+        raise ValueError(
+            'Request to slack returned an error %s, the response is:\n%s'
+            % (response.status_code, response.text)
+        )
+
 def format_event(dnac,event):
     if 'title' in event:
         return(old_format_event(event))
     else:
         return (new_format_event(dnac,event))
+
 def handle(dnac, event):
     '''
     handles and event.  Can send an email, or message to webex.
@@ -53,8 +65,12 @@ def handle(dnac, event):
     header, message = format_event(dnac, event)
     print(message)
 
+
+    # Send to Slack
+    post_slack(header,message)
+
     # send to webex
-    post_message("*******\n" + header + message)
+    #post_message("*******\n" + header + message)
 
     # send an email
     #send_mail(header,message)
