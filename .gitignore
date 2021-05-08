@@ -3,3 +3,4 @@ __pycache__/
 env/
 env3/
 
+WebHookServer/config/slack_config.py
