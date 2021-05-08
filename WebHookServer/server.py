@@ -2,6 +2,7 @@
 from __future__ import print_function
 from flask import Flask
 from flask import request
+from slack import post_slack
 app = Flask(__name__)
 
 
@@ -35,20 +36,6 @@ def new_format_event(dnac,event):
         else:
             message += "\nEventURL: https://{}/{}".format(dnac,event['ciscoDnaEventLink'])
     return header, message
-
-def post_slack(header,message):
-    # Set the webhook_url to the one provided by Slack when you create the webhook at https://my.slack.com/services/new/incoming-webhook
-    slack_data = {'text': "Sup! We're hacking shit together :spaghetti:"}
-
-    response = requests.post(
-        webhook_url, data=json.dumps(slack_data),
-        headers={'Content-Type': 'application/json'}
-    )
-    if response.status_code != 200:
-        raise ValueError(
-            'Request to slack returned an error %s, the response is:\n%s'
-            % (response.status_code, response.text)
-        )
 
 def format_event(dnac,event):
     if 'title' in event:
