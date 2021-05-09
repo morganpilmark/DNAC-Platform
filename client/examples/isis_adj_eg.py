@@ -15,9 +15,9 @@ isis_adj_eg={
     'details': {
         'Type': 'Network Device',
         'Assurance Issue Priority': 'P2',
-        'Assurance Issue Details': 'ISIS adjacency failed on device: 10.10.10.10, interface:TwentyFiveGigE1/0/5',
+        'Assurance Issue Details': 'ISIS adjacency failed test ',
         'Device': '10.50.30.6',
-        'Assurance Issue Name': 'ISIS Adjacency Failed on Device 10.10.10.10 Interface TwentyFiveGigE1/0/5',
+        'Assurance Issue Name': 'ISIS Adjacency Failed test',
         'Assurance Issue Category': 'connectivity',
         'Assurance Issue Status': 'active'
     },
